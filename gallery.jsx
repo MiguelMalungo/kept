@@ -119,7 +119,7 @@ function Gallery({ onOpen }) {
           <h2>6teen poems,<br/><em>6teen short films,</em><br/>6teen prints.</h2>
         </div>
         <p>
-          Hover any piece to watch its ambient film loop. Open a poem to read it whole,
+          Open a poem to read it whole,
           and download the print as PNG or PDF — sized for screen or for paper.
         </p>
       </section>
