@@ -453,10 +453,10 @@ a { color: inherit; text-decoration: none; }
 
 .modal {
   background: var(--paper);
-  width: min(1100px, 100%);
+  width: min(1200px, 100%);
   max-height: 92vh;
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   overflow: hidden;
   border-radius: 2px;
   box-shadow: 0 40px 80px oklch(0 0 0 / 0.3);
@@ -465,21 +465,45 @@ a { color: inherit; text-decoration: none; }
 }
 .modal-backdrop.is-open .modal { transform: translateY(0); }
 
+/* Left panel — video + poem text */
+.modal-media {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: var(--ink);
+}
+.modal-video-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.modal-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.modal-poem {
+  padding: 40px 44px 48px;
+  color: var(--paper);
+}
+.modal-poem .modal-eyebrow { color: oklch(0.65 0.01 80); }
+.modal-poem .modal-title { color: var(--paper); }
+.modal-poem .modal-poem-body { color: oklch(0.82 0.01 80); }
+
 .modal-print {
   background: var(--paper-deep);
-  padding: 56px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
+  padding: 48px 44px 0;
+  overflow-y: auto;
+  gap: 36px;
 }
-.modal-print::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(45deg, oklch(0 0 0 / 0.012) 0 2px, transparent 2px 24px);
+.modal-print-info {
+  width: 100%;
+  padding-bottom: 48px;
 }
 
 .print-canvas {
@@ -699,7 +723,8 @@ a { color: inherit; text-decoration: none; }
   .gallery-grid { gap: 24px 16px; }
   .poem-card.size-lg, .poem-card.size-md, .poem-card.size-sm { grid-column: span 6; }
   .modal { grid-template-columns: 1fr; max-height: 92vh; overflow-y: auto; }
-  .modal-print { padding: 32px; }
-  .modal-info { padding: 32px 24px; }
+  .modal-media { max-height: none; }
+  .modal-print { padding: 32px 24px 0; }
+  .modal-print-info { padding-bottom: 32px; }
   .footer { flex-direction: column; align-items: flex-start; gap: 24px; padding: 56px 20px; }
 }
