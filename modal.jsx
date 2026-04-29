@@ -153,14 +153,6 @@ function PrintModal({ poem, open, onClose }) {
           </div>
 
           <div className="modal-print-info">
-            <div className="modal-section-label">Print specifications</div>
-            <div className="modal-specs">
-              <div className="spec-item"><label>Format</label><span>Digital print, 3:4</span></div>
-              <div className="spec-item"><label>Size</label><span>A4 / 2400 × 3200 px</span></div>
-              <div className="spec-item"><label>Edition</label><span>Of 100, signed</span></div>
-              <div className="spec-item"><label>Paper</label><span>Cream archival</span></div>
-            </div>
-            <div className="modal-section-label">Download</div>
             <div className="download-row">
               <button className="dl-btn primary" onClick={downloadPNG}>
                 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
