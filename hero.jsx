@@ -46,7 +46,7 @@ function Hero() {
       <div className="hero-video">
         <video
           className="hero-video-canvas"
-          src="assets/web/poem-VI.mp4"
+          src="assets/web/hero.mp4"
           autoPlay
           loop
           muted
