@@ -366,6 +366,16 @@ a { color: inherit; text-decoration: none; }
 }
 .poem-card:hover .poem-fragment-overlay { opacity: 1; transform: translateY(0); }
 
+.poem-mobile-cta {
+  display: none;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--paper);
+  opacity: 0.9;
+}
+
 .poem-meta {
   display: flex;
   justify-content: space-between;
@@ -731,6 +741,9 @@ a { color: inherit; text-decoration: none; }
   .gallery { padding: 0 20px 80px; }
   .gallery-grid { gap: 24px 16px; }
   .poem-card.size-lg, .poem-card.size-md, .poem-card.size-sm { grid-column: span 6; }
+  .poem-fragment-overlay { display: none; }
+  .poem-print-btn { display: none; }
+  .poem-mobile-cta { display: block; }
   .modal { grid-template-columns: 1fr; max-height: 92vh; overflow-y: auto; }
   .modal-media { max-height: none; }
   .modal-print { padding: 32px 24px 0; }

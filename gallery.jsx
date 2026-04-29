@@ -88,6 +88,7 @@ function PoemCard({ poem, index, size, onOpen }) {
               <React.Fragment key={i}>{line}{i === 0 && <br />}</React.Fragment>
             ))}
           </div>
+          <div className="poem-mobile-cta">Read &amp; View Print</div>
         </div>
       </div>
       <div className="poem-meta">
