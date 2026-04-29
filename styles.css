@@ -1,0 +1,705 @@
+/* K. — Interactive Poetry Book
+   Type: Source Serif 4 (display) + Inter (UI)
+   Palette: warm cream paper, deep ink, clay accent */
+
+:root {
+  --paper: oklch(0.97 0.012 80);
+  --paper-deep: oklch(0.93 0.018 75);
+  --ink: oklch(0.18 0.012 60);
+  --ink-soft: oklch(0.32 0.012 60);
+  --ink-faint: oklch(0.55 0.010 60);
+  --rule: oklch(0.85 0.012 70);
+  --accent: oklch(0.62 0.13 42);
+  --accent-deep: oklch(0.52 0.14 40);
+
+  --serif: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* subtle paper grain */
+  background-image:
+    radial-gradient(circle at 20% 10%, oklch(0 0 0 / 0.012) 0, transparent 40%),
+    radial-gradient(circle at 80% 70%, oklch(0 0 0 / 0.015) 0, transparent 50%);
+}
+
+/* Subtle film grain layer, page-wide */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.7 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+::selection { background: var(--accent); color: var(--paper); }
+
+a { color: inherit; text-decoration: none; }
+
+/* —— Top nav —— */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 36px;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+  mix-blend-mode: difference;
+  transition: color 0.4s ease;
+}
+.nav.is-light { color: var(--ink); mix-blend-mode: normal; }
+.nav-mark {
+  display: flex;
+  align-items: center;
+  mix-blend-mode: normal;
+}
+.nav-logo {
+  display: block;
+  height: 36px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  transition: filter 0.4s ease;
+}
+.nav.is-light .nav-logo {
+  filter: brightness(0);
+}
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a { opacity: 0.85; transition: opacity 0.2s; }
+.nav-links a:hover { opacity: 1; }
+
+/* —— Hero —— */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 36px 96px;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero-video::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, oklch(0.10 0.02 50 / 0.55) 0%, oklch(0.10 0.02 50 / 0.10) 35%, oklch(0.10 0.02 50 / 0.85) 100%);
+  z-index: 2;
+}
+.hero-video-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 48px;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.hero-eyebrow::before {
+  content: "";
+  width: 36px;
+  height: 1px;
+  background: currentColor;
+}
+
+.hero-title {
+  font-family: var(--sans);
+  font-weight: 200;
+  font-size: clamp(72px, 16vw, 280px);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  margin: 0 0 32px;
+}
+.hero-title em {
+  font-style: normal;
+  font-weight: 300;
+  display: block;
+  font-size: 0.42em;
+  letter-spacing: 0;
+  margin-top: 0.35em;
+  opacity: 0.85;
+}
+.hero-title .char {
+  display: inline-block;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s;
+}
+
+.hero-meta {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+.hero-meta b { font-weight: 500; opacity: 1; }
+
+.hero-fragment {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1.35;
+  max-width: 540px;
+  opacity: 0.92;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.hero-scroll::after {
+  content: "";
+  width: 1px;
+  height: 36px;
+  background: currentColor;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* —— Section: gallery intro —— */
+.intro {
+  padding: 140px 36px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+.intro-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.intro-label::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--ink-faint);
+}
+.intro h2 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(40px, 5vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.intro h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
+.intro p {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 460px;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* —— Gallery grid —— */
+.gallery {
+  padding: 0 36px 140px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 32px 24px;
+}
+
+.poem-card {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.poem-card:hover { transform: translateY(-3px); }
+
+/* Mixed sizes for editorial rhythm */
+/* All cards uniform: square, 4 per row */
+.poem-card.size-lg,
+.poem-card.size-md,
+.poem-card.size-sm { grid-column: span 3; }
+
+.poem-media {
+  position: relative;
+  width: 100%;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--ink);
+  aspect-ratio: 1 / 1;
+}
+.poem-card.size-lg .poem-media,
+.poem-card.size-md .poem-media,
+.poem-card.size-sm .poem-media { aspect-ratio: 1 / 1; }
+
+.poem-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.poem-media-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  color: var(--paper);
+  background: linear-gradient(180deg, oklch(0.10 0.02 50 / 0.0) 0%, oklch(0.10 0.02 50 / 0.0) 50%, oklch(0.10 0.02 50 / 0.65) 100%);
+}
+.poem-media-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.poem-num { opacity: 0.85; }
+.poem-play {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: oklch(1 0 0 / 0.15);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  transition: background 0.2s;
+}
+.poem-card:hover .poem-play { background: var(--accent); }
+.poem-play svg { width: 10px; height: 10px; fill: var(--paper); }
+
+.poem-fragment-overlay {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(15px, 1.4vw, 20px);
+  line-height: 1.35;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s, transform 0.4s;
+  text-wrap: pretty;
+}
+.poem-card:hover .poem-fragment-overlay { opacity: 1; transform: translateY(0); }
+
+.poem-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 0 2px;
+}
+.poem-card.size-sm .poem-meta {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 16px;
+  gap: 8px;
+}
+.poem-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: -0.005em;
+  margin: 0;
+}
+
+.poem-print-btn {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border: none;
+  background: none;
+  padding: 6px 0;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+.poem-print-btn::after {
+  content: "→";
+  display: inline-block;
+  transition: transform 0.2s;
+}
+.poem-print-btn:hover { color: var(--accent); }
+.poem-print-btn:hover::after { transform: translateX(3px); }
+
+/* —— Footer —— */
+.footer {
+  padding: 80px 36px 60px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.footer-mark {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 32px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+/* —— Modal —— */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: oklch(0.10 0.012 50 / 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-backdrop.is-open { opacity: 1; pointer-events: auto; }
+
+.modal {
+  background: var(--paper);
+  width: min(1100px, 100%);
+  max-height: 92vh;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 40px 80px oklch(0 0 0 / 0.3);
+  transform: translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.modal-backdrop.is-open .modal { transform: translateY(0); }
+
+.modal-print {
+  background: var(--paper-deep);
+  padding: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.modal-print::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, oklch(0 0 0 / 0.012) 0 2px, transparent 2px 24px);
+}
+
+.print-canvas {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 3 / 4;
+  background: var(--paper);
+  box-shadow: 0 20px 40px oklch(0 0 0 / 0.18), 0 4px 8px oklch(0 0 0 / 0.08);
+  display: flex;
+  flex-direction: column;
+  padding: 40px 36px;
+  font-family: var(--serif);
+  color: var(--ink);
+  overflow: hidden;
+}
+.print-frame {
+  position: absolute;
+  inset: 14px;
+  border: 1px solid oklch(0 0 0 / 0.08);
+  pointer-events: none;
+}
+.print-num {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 24px;
+}
+.print-title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 28px;
+  line-height: 1.05;
+  margin: 0 0 28px;
+  letter-spacing: -0.01em;
+}
+.print-body {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.55;
+  flex: 1;
+  text-wrap: pretty;
+}
+.print-body p { margin: 0 0 1em; }
+.print-body p:last-child { margin: 0; }
+.print-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--sans);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 20px;
+}
+.print-mark {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.modal-info {
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.modal-eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.modal-eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--ink-faint);
+}
+.modal-title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+}
+.modal-poem-body {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.65;
+  color: var(--ink);
+  margin: 0 0 36px;
+  max-width: 380px;
+  text-wrap: pretty;
+}
+.modal-poem-body p {
+  margin: 0 0 1.4em;
+}
+.modal-poem-body p:last-child { margin-bottom: 0; }
+.modal-poem-placeholder { color: var(--ink-faint); }
+.modal-fragment {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  margin: 0 0 36px;
+  max-width: 380px;
+  text-wrap: pretty;
+}
+.modal-section-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 16px;
+}
+.modal-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+  margin-bottom: 36px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--rule);
+}
+.spec-item label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 4px;
+}
+.spec-item span {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.download-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: auto;
+}
+.dl-btn {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 16px 18px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+}
+.dl-btn:hover { background: var(--ink); color: var(--paper); }
+.dl-btn.primary { background: var(--ink); color: var(--paper); }
+.dl-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.dl-btn svg { width: 12px; height: 12px; }
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  z-index: 10;
+  transition: all 0.2s;
+}
+.modal-close:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.modal-close svg { width: 12px; height: 12px; }
+
+/* —— scroll-driven hero typography —— */
+.hero-title .char[data-i="0"] { transform: translateY(var(--scroll-y, 0)); }
+
+/* responsive */
+@media (max-width: 900px) {
+  .nav { padding: 18px 20px; }
+  .nav-links { gap: 18px; }
+  .hero { padding: 0 20px 48px; }
+  .hero-content { grid-template-columns: 1fr; gap: 24px; }
+  .hero-meta { text-align: left; }
+  .intro { grid-template-columns: 1fr; gap: 32px; padding: 80px 20px 56px; }
+  .gallery { padding: 0 20px 80px; }
+  .gallery-grid { gap: 24px 16px; }
+  .poem-card.size-lg, .poem-card.size-md, .poem-card.size-sm { grid-column: span 6; }
+  .modal { grid-template-columns: 1fr; max-height: 92vh; overflow-y: auto; }
+  .modal-print { padding: 32px; }
+  .modal-info { padding: 32px 24px; }
+  .footer { flex-direction: column; align-items: flex-start; gap: 24px; padding: 56px 20px; }
+}
