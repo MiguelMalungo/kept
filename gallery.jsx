@@ -82,11 +82,6 @@ function PoemCard({ poem, index, size, onOpen }) {
         <div className="poem-media-overlay">
           <div className="poem-media-top">
             <span className="poem-num">{poem.num}</span>
-            <div className="poem-play" aria-label="play">
-              <svg viewBox="0 0 12 12">
-                <polygon points="2,1 11,6 2,11" />
-              </svg>
-            </div>
           </div>
           <div className="poem-fragment-overlay">
             {(poem.body || "").split("\n").filter(l => l.trim()).slice(0, 2).map((line, i) => (
