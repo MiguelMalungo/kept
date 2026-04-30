@@ -95,11 +95,6 @@ function App() {
         <a href="#hero" className="nav-mark">
           <img className="nav-logo" src="assets/kk.png" alt="KK" />
         </a>
-        <div className="nav-links">
-          <a href="#gallery">The Collection</a>
-          <a href="#about">About</a>
-          <a href="#shop">Shop</a>
-        </div>
       </nav>
 
       <main data-screen-label="01 Landing">
