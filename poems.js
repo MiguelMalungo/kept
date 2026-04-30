@@ -18,7 +18,7 @@ Are powerless against depravity
 For someone to come down to earth
 In upwardspiraling rebirth
 First they should feel their own gravity` },
-  { num: "V",    title: "Telephone Wire",       hue: 0,   tone: 0.06, theme: "warm",    video: "assets/web/poem-V.mp4",    body: `` },
+  { num: "V",    title: "Wire",       hue: 0,   tone: 0.06, theme: "warm",    video: "assets/web/poem-V.mp4",    body: `` },
   { num: "VI",   title: "Horse of Fire",        hue: 18,  tone: 0.14, theme: "ember",   video: "assets/web/poem-VI.mp4",   body: `And so it's true the fire horse rides within me
 And it's that poet, who is God, that makes it burn
 And all my strength of imagination there must be
@@ -27,12 +27,12 @@ Just so the dream may redo itself again
 And it's continuous emergence cycle will prevail
 And with the fate of nothingness that gives us being
 The full acceptance of the waters I will sail` },
-  { num: "VII",  title: "Snow Forecast",        hue: 200, tone: 0.03, theme: "frost",   video: "assets/web/poem-VII.mp4",  body: `` },
+  { num: "VII",  title: "Forecast",        hue: 200, tone: 0.03, theme: "frost",   video: "assets/web/poem-VII.mp4",  body: `` },
   { num: "VIII", title: "Their Law",     hue: 35,  tone: 0.09, theme: "iron",    video: "assets/web/poem-VIII.mp4", body: `In every moment a truth
 Whose sight can change what I saw
 I broke rules even I made
 Make even less of their law` },
-  { num: "IX",   title: "Letter to K.",         hue: 80,  tone: 0.07, theme: "moss",    video: "assets/web/poem-IX.mp4",   body: `` },
+  { num: "IX",   title: "Letter",         hue: 80,  tone: 0.07, theme: "moss",    video: "assets/web/poem-IX.mp4",   body: `` },
   { num: "X",    title: "Dart",hue: 350, tone: 0.10, theme: "rose",    video: "assets/web/poem-X.mp4",    body: `Re access and re align
 Be grateful for every rejection
 That got you out of stagnation

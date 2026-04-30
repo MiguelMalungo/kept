@@ -61,7 +61,7 @@ function PrintModal({ poem, open, onClose }) {
 
     ctx.fillStyle = ink;
     ctx.font = "italic 300 36px 'Source Serif 4', Georgia, serif";
-    const kText = "Kept";
+    const kText = "Blend";
     ctx.fillText(kText, W - 90 - ctx.measureText(kText).width, H - 80);
 
     return canvas;
@@ -84,7 +84,7 @@ function PrintModal({ poem, open, onClose }) {
     const dataUrl = canvas.toDataURL("image/png");
     const w = window.open("", "_blank");
     if (!w) return;
-    w.document.write(`<!doctype html><html><head><title>${poem.title} — Kept</title>
+    w.document.write(`<!doctype html><html><head><title>${poem.title} — Blend</title>
       <style>
         @page { size: A4 portrait; margin: 0; }
         html, body { margin: 0; background: #f6f1e7; }
@@ -148,7 +148,7 @@ function PrintModal({ poem, open, onClose }) {
             </div>
             <div className="print-foot">
               <span>Edition of 100</span>
-              <span className="print-mark">Kept</span>
+              <span className="print-mark">Blend</span>
             </div>
           </div>
 
