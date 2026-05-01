@@ -32,7 +32,10 @@ The full acceptance of the waters I will sail` },
 Whose sight can change what I saw
 I broke rules even I made
 Make even less of their law` },
-  { num: "IX",   title: "Letter",         hue: 80,  tone: 0.07, theme: "moss",    video: "assets/web/poem-IX.mp4",   body: `` },
+  { num: "IX",   title: "Allow",          hue: 80,  tone: 0.07, theme: "moss",    video: "assets/web/poem-IX.mp4",   body: `My Lord of the unpredictable
+My beloved Holy Ghost
+Allow me to allow myself
+To free whom I love the most` },
   { num: "X",    title: "Dart",hue: 350, tone: 0.10, theme: "rose",    video: "assets/web/poem-X.mp4",    body: `Re access and re align
 Be grateful for every rejection
 That got you out of stagnation
