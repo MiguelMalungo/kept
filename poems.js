@@ -41,7 +41,11 @@ Some wounds may take time to heal
 Don't rush but soften your heart
 So it stops forcing a future
 And clarity hits like a dart` },
-  { num: "XI",   title: "Long Distance",        hue: 240, tone: 0.06, theme: "lunar",   video: "assets/web/poem-XI.mp4",   body: `` },
+  { num: "XI",   title: "Hero",                  hue: 240, tone: 0.06, theme: "lunar",   video: "assets/web/poem-XI.mp4",   body: `The hero is free.. independent
+The world needs your contributions
+beautiful multi dimensional
+Don´t lower stakes, stay ascensional
+Nor settle for low resolutions` },
   { num: "XII",  title: "Inventory",            hue: 45,  tone: 0.05, theme: "linen",   video: "assets/web/poem-XII.mp4",  body: `` },
   { num: "XIII", title: "Join",                 hue: 195, tone: 0.04, theme: "saline",  video: "assets/web/poem-XIII.mp4", body: `When you contemplate the mundane
 With a fresh way of perceiving
