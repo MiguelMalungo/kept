@@ -958,7 +958,7 @@ a { color: inherit; text-decoration: none; }
   .gallery-grid { gap: 24px 16px; }
   .poem-card.size-lg, .poem-card.size-md, .poem-card.size-sm { grid-column: span 12; }
   .poem-mobile-cta { display: none; }
-  .poem-fragment-overlay { opacity: 1; transform: translateY(0); }
+  .poem-fragment-overlay { opacity: 1; transform: translateY(0); font-size: clamp(25px, 5vw, 34px); }
   .poem-meta,
   .poem-card.size-sm .poem-meta,
   .poem-card.size-md .poem-meta,
