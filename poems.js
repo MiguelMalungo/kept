@@ -18,7 +18,10 @@ Are powerless against depravity
 For someone to come down to earth
 In upwardspiraling rebirth
 First they should feel their own gravity` },
-  { num: "V",    title: "Wire",       hue: 0,   tone: 0.06, theme: "warm",    video: "assets/web/poem-V.mp4",    body: `` },
+  { num: "V",    title: "Through",        hue: 0,   tone: 0.06, theme: "warm",    video: "assets/web/poem-V.mp4",    body: `The divine moves through all things
+Moves you too so just allow
+Just know the what and the why
+Let it fix the where and how` },
   { num: "VI",   title: "Horse of Fire",        hue: 18,  tone: 0.14, theme: "ember",   video: "assets/web/poem-VI.mp4",   body: `And so it's true the fire horse rides within me
 And it's that poet, who is God, that makes it burn
 And all my strength of imagination there must be
