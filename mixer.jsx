@@ -133,16 +133,30 @@ function Mixer() {
   const gainARef = React.useRef(null);
   const gainBRef = React.useRef(null);
 
+  // Detect once whether HTMLAudioElement.volume is honored. iOS Safari (and
+  // every iOS-based browser, since they all use WebKit) keeps it pinned to 1.0.
+  // On every other platform — desktop Safari, mobile + desktop Chrome,
+  // Firefox, Android — volume works directly, so we don't need Web Audio.
+  const needsWebAudioRef = React.useRef(null);
+  if (needsWebAudioRef.current === null) {
+    try {
+      const test = document.createElement("audio");
+      test.volume = 0.5;
+      needsWebAudioRef.current = test.volume !== 0.5;
+    } catch (e) {
+      needsWebAudioRef.current = true;
+    }
+  }
+
   // Linear crossfade gains
   const gainA = crossfade <= 0 ? 1 : 1 - crossfade;
   const gainB = crossfade >= 0 ? 1 : 1 + crossfade;
 
-  // Build Web Audio graph synchronously inside a user gesture. We only do
-  // this when the user first touches the crossfader — until then audio plays
-  // straight through the <audio> element, which works fine on every platform.
-  // Once the graph exists, both elements route through GainNodes (the only
-  // reliable way to control volume on iOS Safari).
+  // Build Web Audio graph (iOS only — see needsWebAudioRef above). On Chrome,
+  // Firefox, and desktop browsers we never call this, so the audio element
+  // keeps direct control and audio.volume changes work as normal.
   const ensureAudioGraph = React.useCallback(() => {
+    if (!needsWebAudioRef.current) return;
     if (audioCtxRef.current) return;
     const Ctx = window.AudioContext || window.webkitAudioContext;
     if (!Ctx) return;
