@@ -103,6 +103,10 @@ function Deck({ label, audioRef, track, setTrack, playing, setPlaying }) {
           type="range" min="0" max={duration || 0} step="0.1"
           value={currentTime}
           onChange={onSeek}
+          onInput={onSeek}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
           disabled={!track || !duration}
         />
         <div className="deck-time">
@@ -124,21 +128,53 @@ function Mixer() {
 
   const audioARef = React.useRef(null);
   const audioBRef = React.useRef(null);
+  const audioCtxRef = React.useRef(null);
+  const gainARef = React.useRef(null);
+  const gainBRef = React.useRef(null);
 
   // Linear crossfade gains
   const gainA = crossfade <= 0 ? 1 : 1 - crossfade;
   const gainB = crossfade >= 0 ? 1 : 1 + crossfade;
 
+  // Wire up Web Audio graph once. iOS Safari ignores HTMLAudioElement.volume,
+  // so we route through GainNodes which DO honor gain on iOS.
+  const ensureAudioGraph = React.useCallback(() => {
+    if (audioCtxRef.current) return;
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    const ctx = new Ctx();
+    const a = audioARef.current;
+    const b = audioBRef.current;
+    if (!a || !b) return;
+    try {
+      const srcA = ctx.createMediaElementSource(a);
+      const srcB = ctx.createMediaElementSource(b);
+      const gA = ctx.createGain();
+      const gB = ctx.createGain();
+      gA.gain.value = gainA;
+      gB.gain.value = gainB;
+      srcA.connect(gA).connect(ctx.destination);
+      srcB.connect(gB).connect(ctx.destination);
+      audioCtxRef.current = ctx;
+      gainARef.current = gA;
+      gainBRef.current = gB;
+    } catch (e) {
+      // Already connected, ignore
+    }
+  }, []);
+
   React.useEffect(() => {
-    if (audioARef.current) audioARef.current.volume = gainA;
+    if (gainARef.current) gainARef.current.gain.value = gainA;
+    else if (audioARef.current) audioARef.current.volume = gainA;
   }, [gainA]);
 
   React.useEffect(() => {
-    if (audioBRef.current) audioBRef.current.volume = gainB;
+    if (gainBRef.current) gainBRef.current.gain.value = gainB;
+    else if (audioBRef.current) audioBRef.current.volume = gainB;
   }, [gainB]);
 
-  // Auto-play Blop on deck A when the page loads. Browsers will allow this
-  // after any user gesture; otherwise we retry on first interaction.
+  // Auto-play Blop on deck A. Also lazily build the Web Audio graph and
+  // resume the AudioContext on first user gesture (required by iOS).
   React.useEffect(() => {
     const tryPlay = () => {
       const a = audioARef.current;
@@ -147,13 +183,21 @@ function Mixer() {
       a.play().then(() => setPlayingA(true)).catch(() => {});
     };
     tryPlay();
-    const onFirstClick = () => {
+    const onFirstGesture = () => {
+      ensureAudioGraph();
+      const ctx = audioCtxRef.current;
+      if (ctx && ctx.state === "suspended") ctx.resume().catch(() => {});
       tryPlay();
-      window.removeEventListener("pointerdown", onFirstClick);
+      window.removeEventListener("pointerdown", onFirstGesture);
+      window.removeEventListener("touchstart", onFirstGesture);
     };
-    window.addEventListener("pointerdown", onFirstClick, { once: true });
-    return () => window.removeEventListener("pointerdown", onFirstClick);
-  }, []);
+    window.addEventListener("pointerdown", onFirstGesture, { once: true });
+    window.addEventListener("touchstart", onFirstGesture, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", onFirstGesture);
+      window.removeEventListener("touchstart", onFirstGesture);
+    };
+  }, [ensureAudioGraph]);
 
   return (
     <div className="mixer" onClick={(e) => e.stopPropagation()}>
@@ -186,6 +230,10 @@ function Mixer() {
           type="range" min="-1" max="1" step="0.01"
           value={crossfade}
           onChange={(e) => setCrossfade(parseFloat(e.target.value))}
+          onInput={(e) => setCrossfade(parseFloat(e.target.value))}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
         />
       </div>
     </div>
