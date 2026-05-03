@@ -76,6 +76,7 @@ function Deck({ label, audioRef, track, setTrack, playing, setPlaying }) {
           setTrack(e.target.value);
           setPlaying(false);
           setCurrentTime(0);
+          setDuration(0);
         }}
       >
         <option value="">— Select track —</option>
@@ -199,8 +200,8 @@ function Mixer() {
 
   return (
     <div className="mixer" onClick={(e) => e.stopPropagation()}>
-      <audio ref={audioARef} src={trackA || undefined} loop preload="none" />
-      <audio ref={audioBRef} src={trackB || undefined} loop preload="none" />
+      <audio ref={audioARef} src={trackA || undefined} loop preload="metadata" />
+      <audio ref={audioBRef} src={trackB || undefined} loop preload="metadata" />
 
       <div className="mixer-decks">
         <Deck
