@@ -108,7 +108,7 @@ function PrintModal({ poem, open, onClose }) {
           </svg>
         </button>
 
-        {/* Left — video + poem */}
+        {/* Left — video + print image */}
         <div className="modal-media">
           <div className="modal-video-wrap">
             {poem.video && (
@@ -119,22 +119,11 @@ function PrintModal({ poem, open, onClose }) {
               />
             )}
           </div>
-          <div className="modal-poem">
-            <div className="modal-eyebrow">Poem {poem.num}</div>
-            <h2 className="modal-title">{poem.title}</h2>
-            <div className="modal-poem-body">
-              {poem.body
-                ? poem.body.split("\n\n").map((stanza, si) => (
-                    <p key={si}>
-                      {stanza.split("\n").map((line, li, arr) => (
-                        <React.Fragment key={li}>{line}{li < arr.length - 1 && <br />}</React.Fragment>
-                      ))}
-                    </p>
-                  ))
-                : <span className="modal-poem-placeholder">—</span>
-              }
+          {poem.image && (
+            <div className="modal-image-wrap">
+              <img className="modal-image" src={poem.image} alt={poem.title} />
             </div>
-          </div>
+          )}
         </div>
 
         {/* Right — print + download */}
@@ -167,6 +156,20 @@ function PrintModal({ poem, open, onClose }) {
                 PDF
               </button>
             </div>
+            {poem.imageOrig && (
+              <div className="download-row" style={{ marginTop: 8 }}>
+                <a
+                  className="dl-btn"
+                  href={poem.imageOrig}
+                  download={`${poem.num}_${poem.title.replace(/\s+/g, "_")}_original.png`}
+                >
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
+                    <path d="M6 1 V8 M3 5.5 L6 8.5 L9 5.5 M2 10 H10" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Original image
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
