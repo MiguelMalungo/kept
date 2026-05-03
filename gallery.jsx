@@ -94,7 +94,8 @@ function PoemCard({ poem, index, size, onOpen }) {
       <div className="poem-meta">
         <h3 className="poem-title">{poem.title}</h3>
         <button className="poem-print-btn" onClick={(e) => { e.stopPropagation(); onOpen(poem); }}>
-          View print
+          <span className="btn-label-desktop">View print</span>
+          <span className="btn-label-mobile">Read &amp; View Print</span>
         </button>
       </div>
     </article>
