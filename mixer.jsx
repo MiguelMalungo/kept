@@ -136,17 +136,21 @@ function Mixer() {
   const gainA = crossfade <= 0 ? 1 : 1 - crossfade;
   const gainB = crossfade >= 0 ? 1 : 1 + crossfade;
 
-  // Wire up Web Audio graph once. iOS Safari ignores HTMLAudioElement.volume,
-  // so we route through GainNodes which DO honor gain on iOS.
+  // Build Web Audio graph synchronously inside a user gesture. We only do
+  // this when the user first touches the crossfader — until then audio plays
+  // straight through the <audio> element, which works fine on every platform.
+  // Once the graph exists, both elements route through GainNodes (the only
+  // reliable way to control volume on iOS Safari).
   const ensureAudioGraph = React.useCallback(() => {
     if (audioCtxRef.current) return;
     const Ctx = window.AudioContext || window.webkitAudioContext;
     if (!Ctx) return;
-    const ctx = new Ctx();
     const a = audioARef.current;
     const b = audioBRef.current;
     if (!a || !b) return;
+    let ctx;
     try {
+      ctx = new Ctx();
       const srcA = ctx.createMediaElementSource(a);
       const srcB = ctx.createMediaElementSource(b);
       const gA = ctx.createGain();
@@ -158,8 +162,10 @@ function Mixer() {
       audioCtxRef.current = ctx;
       gainARef.current = gA;
       gainBRef.current = gB;
+      if (ctx.state === "suspended") ctx.resume().catch(() => {});
     } catch (e) {
-      // Already connected, ignore
+      // Source already connected or context creation failed — bail out
+      audioCtxRef.current = null;
     }
   }, []);
 
@@ -173,8 +179,7 @@ function Mixer() {
     else if (audioBRef.current) audioBRef.current.volume = gainB;
   }, [gainB]);
 
-  // Auto-play Blop on deck A. Also lazily build the Web Audio graph and
-  // resume the AudioContext on first user gesture (required by iOS).
+  // Auto-play Blop on deck A. Browsers allow this after any user gesture.
   React.useEffect(() => {
     const tryPlay = () => {
       const a = audioARef.current;
@@ -183,21 +188,14 @@ function Mixer() {
       a.play().then(() => setPlayingA(true)).catch(() => {});
     };
     tryPlay();
-    const onFirstGesture = () => {
-      ensureAudioGraph();
-      const ctx = audioCtxRef.current;
-      if (ctx && ctx.state === "suspended") ctx.resume().catch(() => {});
-      tryPlay();
-      window.removeEventListener("pointerdown", onFirstGesture);
-      window.removeEventListener("touchstart", onFirstGesture);
-    };
+    const onFirstGesture = () => { tryPlay(); };
     window.addEventListener("pointerdown", onFirstGesture, { once: true });
     window.addEventListener("touchstart", onFirstGesture, { once: true });
     return () => {
       window.removeEventListener("pointerdown", onFirstGesture);
       window.removeEventListener("touchstart", onFirstGesture);
     };
-  }, [ensureAudioGraph]);
+  }, []);
 
   return (
     <div className="mixer" onClick={(e) => e.stopPropagation()}>
@@ -231,9 +229,10 @@ function Mixer() {
           value={crossfade}
           onChange={(e) => setCrossfade(parseFloat(e.target.value))}
           onInput={(e) => setCrossfade(parseFloat(e.target.value))}
-          onTouchStart={(e) => e.stopPropagation()}
+          onTouchStart={(e) => { e.stopPropagation(); ensureAudioGraph(); }}
           onTouchMove={(e) => e.stopPropagation()}
-          onPointerDown={(e) => e.stopPropagation()}
+          onPointerDown={(e) => { e.stopPropagation(); ensureAudioGraph(); }}
+          onMouseDown={() => ensureAudioGraph()}
         />
       </div>
     </div>
