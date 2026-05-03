@@ -108,46 +108,43 @@ function PrintModal({ poem, open, onClose }) {
           </svg>
         </button>
 
-        {/* Left — video + print image */}
+        {/* Left — video with poem overlaid */}
         <div className="modal-media">
-          <div className="modal-video-wrap">
-            {poem.video && (
-              <video
-                className="modal-video"
-                src={poem.video}
-                autoPlay loop muted playsInline
-              />
-            )}
-          </div>
-          {poem.image && (
-            <div className="modal-image-wrap">
-              <img className="modal-image" src={poem.image} alt={poem.title} />
-            </div>
+          {poem.video && (
+            <video className="modal-video" src={poem.video} autoPlay loop muted playsInline />
           )}
+          <div className="modal-poem">
+            <div className="modal-eyebrow">Poem {poem.num}</div>
+            <h2 className="modal-title">{poem.title}</h2>
+            <div className="modal-poem-body">
+              {poem.body
+                ? poem.body.split("\n\n").map((stanza, si) => (
+                    <p key={si}>
+                      {stanza.split("\n").map((line, li, arr) => (
+                        <React.Fragment key={li}>{line}{li < arr.length - 1 && <br />}</React.Fragment>
+                      ))}
+                    </p>
+                  ))
+                : <span className="modal-poem-placeholder">—</span>
+              }
+            </div>
+          </div>
         </div>
 
-        {/* Right — print + download */}
+        {/* Right — print image + download */}
         <div className="modal-print">
-          <div className="print-canvas" ref={printRef}>
-            <div className="print-frame" />
-            <div className="print-num">No. {poem.num}</div>
-            <h3 className="print-title">{poem.title}</h3>
-            <div className="print-body">
-              {lines.map((line, i) => <p key={i}>{line}</p>)}
+          {poem.image && (
+            <div className="modal-print-image-wrap">
+              <img className="modal-print-image" src={poem.image} alt={poem.title} />
             </div>
-            <div className="print-foot">
-              <span>Edition of 100</span>
-              <span className="print-mark">Blend</span>
-            </div>
-          </div>
-
+          )}
           <div className="modal-print-info">
             <div className="download-row">
               <button className="dl-btn primary" onClick={downloadPNG}>
                 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
                   <path d="M6 1 V8 M3 5.5 L6 8.5 L9 5.5 M2 10 H10" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                PNG
+                Print PNG
               </button>
               <button className="dl-btn" onClick={downloadPDF}>
                 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -158,11 +155,8 @@ function PrintModal({ poem, open, onClose }) {
             </div>
             {poem.imageOrig && (
               <div className="download-row" style={{ marginTop: 8 }}>
-                <a
-                  className="dl-btn"
-                  href={poem.imageOrig}
-                  download={`${poem.num}_${poem.title.replace(/\s+/g, "_")}_original.png`}
-                >
+                <a className="dl-btn" href={poem.imageOrig}
+                  download={`${poem.num}_${poem.title.replace(/\s+/g, "_")}_original.png`}>
                   <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
                     <path d="M6 1 V8 M3 5.5 L6 8.5 L9 5.5 M2 10 H10" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
