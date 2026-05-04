@@ -1,10 +1,8 @@
-// Print modal — left: video + poem text. Right: print preview + download.
+// Modal — left: video with poem overlaid. Right (or below on mobile): print image + download.
 
-const { useEffect, useRef } = React;
+const { useEffect } = React;
 
 function PrintModal({ poem, open, onClose }) {
-  const printRef = useRef(null);
-
   useEffect(() => {
     const onKey = (e) => { if (e.key === "Escape") onClose(); };
     if (open) window.addEventListener("keydown", onKey);
@@ -12,91 +10,6 @@ function PrintModal({ poem, open, onClose }) {
   }, [open, onClose]);
 
   if (!poem) return null;
-
-  const lines = (poem.body || "").split("\n").filter(l => l.trim() !== "");
-
-  const renderPrintCanvas = (scale = 2) => {
-    const W = 900, H = 1200;
-    const canvas = document.createElement("canvas");
-    canvas.width = W * scale;
-    canvas.height = H * scale;
-    const ctx = canvas.getContext("2d");
-    ctx.scale(scale, scale);
-
-    ctx.fillStyle = "#f6f1e7";
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.strokeStyle = "rgba(0,0,0,0.025)";
-    ctx.lineWidth = 1;
-    for (let i = 0; i < W + H; i += 28) {
-      ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(0, i); ctx.stroke();
-    }
-
-    ctx.strokeStyle = "rgba(0,0,0,0.18)";
-    ctx.lineWidth = 1;
-    ctx.strokeRect(40, 40, W - 80, H - 80);
-
-    const ink = "#211d18";
-    const inkFaint = "#8a857c";
-
-    ctx.fillStyle = inkFaint;
-    ctx.font = "500 22px Inter, sans-serif";
-    ctx.fillText(poem.num.toUpperCase(), 90, 130);
-
-    ctx.strokeStyle = inkFaint;
-    ctx.beginPath(); ctx.moveTo(90, 150); ctx.lineTo(160, 150); ctx.stroke();
-
-    ctx.fillStyle = ink;
-    ctx.font = "italic 300 86px 'Source Serif 4', Georgia, serif";
-    ctx.fillText(poem.title, 90, 250);
-
-    ctx.fillStyle = ink;
-    ctx.font = "300 38px 'Source Serif 4', Georgia, serif";
-    const startY = 420, lineH = 60;
-    lines.forEach((line, i) => ctx.fillText(line, 90, startY + i * lineH));
-
-    ctx.fillStyle = inkFaint;
-    ctx.font = "500 18px Inter, sans-serif";
-    ctx.fillText("EDITION OF 100", 90, H - 90);
-
-    ctx.fillStyle = ink;
-    ctx.font = "italic 300 36px 'Source Serif 4', Georgia, serif";
-    const kText = "Blend";
-    ctx.fillText(kText, W - 90 - ctx.measureText(kText).width, H - 80);
-
-    return canvas;
-  };
-
-  const downloadPNG = () => {
-    const canvas = renderPrintCanvas(2);
-    canvas.toBlob((blob) => {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `K_${poem.num}_${poem.title.replace(/\s+/g, "_")}.png`;
-      document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(url);
-    }, "image/png");
-  };
-
-  const downloadPDF = () => {
-    const canvas = renderPrintCanvas(2);
-    const dataUrl = canvas.toDataURL("image/png");
-    const w = window.open("", "_blank");
-    if (!w) return;
-    w.document.write(`<!doctype html><html><head><title>${poem.title} — Blend</title>
-      <style>
-        @page { size: A4 portrait; margin: 0; }
-        html, body { margin: 0; background: #f6f1e7; }
-        .wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
-        img { width: 100%; max-width: 600px; height: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        @media print { .wrap { padding: 0; } img { box-shadow: none; } }
-      </style></head>
-      <body><div class="wrap"><img src="${dataUrl}" alt="${poem.title}" /></div>
-      <script>window.onload = () => setTimeout(() => window.print(), 300);<\/script>
-      </body></html>`);
-    w.document.close();
-  };
 
   return (
     <div className={`modal-backdrop ${open ? "is-open" : ""}`} onClick={onClose}>
@@ -131,40 +44,27 @@ function PrintModal({ poem, open, onClose }) {
           </div>
         </div>
 
-        {/* Right — print image + download */}
+        {/* Right — print image + single download button */}
         <div className="modal-print">
           {poem.image && (
             <div className="modal-print-image-wrap">
               <img className="modal-print-image" src={poem.image} alt={poem.title} />
             </div>
           )}
-          <div className="modal-print-info">
-            <div className="download-row">
-              <button className="dl-btn primary" onClick={downloadPNG}>
+          {poem.imageOrig && (
+            <div className="modal-print-info">
+              <a
+                className="dl-btn primary"
+                href={poem.imageOrig}
+                download={`${poem.num}_${poem.title.replace(/\s+/g, "_")}.png`}
+              >
                 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
                   <path d="M6 1 V8 M3 5.5 L6 8.5 L9 5.5 M2 10 H10" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                Print PNG
-              </button>
-              <button className="dl-btn" onClick={downloadPDF}>
-                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
-                  <path d="M6 1 V8 M3 5.5 L6 8.5 L9 5.5 M2 10 H10" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                PDF
-              </button>
+                Download original PNG
+              </a>
             </div>
-            {poem.imageOrig && (
-              <div className="download-row" style={{ marginTop: 8 }}>
-                <a className="dl-btn" href={poem.imageOrig}
-                  download={`${poem.num}_${poem.title.replace(/\s+/g, "_")}_original.png`}>
-                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
-                    <path d="M6 1 V8 M3 5.5 L6 8.5 L9 5.5 M2 10 H10" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  Original image
-                </a>
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </div>
