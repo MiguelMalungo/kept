@@ -51,11 +51,11 @@ function PrintModal({ poem, open, onClose }) {
               <img className="modal-print-image" src={poem.image} alt={poem.title} />
             </div>
           )}
-          {poem.imageOrig && (
+          {poem.image && (
             <div className="modal-print-info">
               <a
                 className="dl-btn primary"
-                href={poem.imageOrig}
+                href={poem.image}
                 download={`${poem.num}_${poem.title.replace(/\s+/g, "_")}.png`}
               >
                 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">

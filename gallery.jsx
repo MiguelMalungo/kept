@@ -103,10 +103,7 @@ function PoemCard({ poem, index, size, onOpen }) {
 }
 
 function Gallery({ onOpen }) {
-  const sorted = [
-    ...window.POEMS.filter(p => p.body && p.body.trim()),
-    ...window.POEMS.filter(p => !p.body || !p.body.trim()),
-  ];
+  const sorted = window.POEMS;
   const sizes = buildSizes(sorted.length);
   return (
     <>
