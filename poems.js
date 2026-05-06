@@ -64,11 +64,11 @@ Awareness flows… new expressions` },
 Trying to "undo" replaying the past
 This can only ruin your future
 Since forced things will never last` },
-  { num: "XIV",  title: "Absolute",         hue: 25,  tone: 0.09, theme: "ember",   video: "assets/web/poem-XIV.mp4",  image: "assets/14.png", body: `Theorize about the absolute
+  { num: "XIV",  title: "Forecast",      hue: 200, tone: 0.03, theme: "frost",   video: "assets/web/poem-XIV.mp4",  image: "assets/14.png", body: `` },
+  { num: "XV",   title: "Inventory",     hue: 45,  tone: 0.05, theme: "linen",   video: "assets/web/poem-XV.mp4",   image: "assets/15.png", body: `` },
+  { num: "XVI",  title: "Absolute",      hue: 25,  tone: 0.09, theme: "ember",   video: "assets/web/poem-XVI.mp4",  image: "assets/16.png", body: `Theorize about the absolute
 To me is more silly than bold
 Recognize it manifests
 Staying on it and its tests
 The best experiences unfold` },
-  { num: "XV",   title: "Inventory",     hue: 45,  tone: 0.05, theme: "linen",   video: "assets/web/poem-XV.mp4",   image: "assets/15.png", body: `` },
-  { num: "XVI",  title: "Forecast",      hue: 200, tone: 0.03, theme: "frost",   video: "assets/web/poem-XVI.mp4",  image: "assets/16.png", body: `` },
 ];
