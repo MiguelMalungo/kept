@@ -65,7 +65,18 @@ Trying to "undo" replaying the past
 This can only ruin your future
 Since forced things will never last` },
   { num: "XIV",  title: "Forecast",      hue: 200, tone: 0.03, theme: "frost",   video: "assets/web/poem-XIV.mp4",  image: "assets/14.png", body: `` },
-  { num: "XV",   title: "Inventory",     hue: 45,  tone: 0.05, theme: "linen",   video: "assets/web/poem-XV.mp4",   image: "assets/15.png", body: `` },
+  { num: "XV",   title: "Dude",          hue: 45,  tone: 0.05, theme: "linen",   video: "assets/web/poem-XV.mp4",   image: "assets/15.png", body: `Just stay confident and keep playing
+Watch out when all is going well
+And the lowest of the low tide
+Marks the raising tide swell
+Don't twist your face to your weakness
+Or the weakness of your brothers
+It's good to sing in the rain
+Your joy may infect the others
+Don't cut nothing of your self
+To become beautiful food
+Don't wank to others experiences
+Only yours are fertile, dude` },
   { num: "XVI",  title: "Absolute",      hue: 25,  tone: 0.09, theme: "ember",   video: "assets/web/poem-XVI.mp4",  image: "assets/16.png", body: `Theorize about the absolute
 To me is more silly than bold
 Recognize it manifests
