@@ -60,15 +60,15 @@ Without excess… self obsessions
 Which may drown the spirits visions
 By reviewing outer decisions
 Awareness flows… new expressions` },
-  { num: "XIII", title: "Unfold",        hue: 270, tone: 0.08, theme: "eclipse", video: "assets/web/poem-XIII.mp4", image: "assets/13.png", body: `Theorize about the absolute
+  { num: "XIII", title: "Unfold",        hue: 270, tone: 0.08, theme: "eclipse", video: "assets/web/poem-XIII.mp4", image: "assets/13.png", body: `Learn lessons without self punishment
+Trying to "undo" replaying the past
+This can only ruin your future
+Since forced things will never last` },
+  { num: "XIV",  title: "Forecast",      hue: 200, tone: 0.03, theme: "frost",   video: "assets/web/poem-XIV.mp4",  image: "assets/14.png", body: `` },
+  { num: "XV",   title: "Inventory",     hue: 45,  tone: 0.05, theme: "linen",   video: "assets/web/poem-XV.mp4",   image: "assets/15.png", body: `` },
+  { num: "XVI",  title: "After",         hue: 25,  tone: 0.09, theme: "ember",   video: "assets/web/poem-XVI.mp4",  image: "assets/16.png", body: `Theorize about the absolute
 To me is more silly than bold
 Recognize it manifests
 Staying on it and its tests
 The best experiences unfold` },
-  { num: "XIV",  title: "Forecast",      hue: 200, tone: 0.03, theme: "frost",   video: "assets/web/poem-XIV.mp4",  image: "assets/14.png", body: `` },
-  { num: "XV",   title: "Inventory",     hue: 45,  tone: 0.05, theme: "linen",   video: "assets/web/poem-XV.mp4",   image: "assets/15.png", body: `` },
-  { num: "XVI",  title: "After",         hue: 25,  tone: 0.09, theme: "ember",   video: "assets/web/poem-XVI.mp4",  image: "assets/16.png", body: `Learn lessons without self punishment
-Trying to "undo" replaying the past
-This can only ruin your future
-Since forced things will never last` },
 ];
