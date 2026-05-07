@@ -64,7 +64,7 @@ Awareness flows… new expressions` },
 Trying to "undo" replaying the past
 This can only ruin your future
 Since forced things will never last` },
-  { num: "XIV",  title: "Forecast",      hue: 200, tone: 0.03, theme: "frost",   video: "assets/14b.mp4",           image: "assets/14b.png", body: `Create your way to your top
+  { num: "XIV",  title: "Purpose",      hue: 200, tone: 0.03, theme: "frost",   video: "assets/14b.mp4",           image: "assets/14b.png", body: `Create your way to your top
 Taken down again and again
 But by ever greater things
 That, is your life's purpose, man` },
