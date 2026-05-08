@@ -1,19 +1,27 @@
 // Modal — left: video with poem overlaid. Right (or below on mobile): print image + download.
 
-const { useEffect } = React;
+const { useEffect, useRef } = React;
 
 function PrintModal({ poem, open, onClose }) {
+  const modalRef = useRef(null);
+
   useEffect(() => {
     const onKey = (e) => { if (e.key === "Escape") onClose(); };
     if (open) window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
+  useEffect(() => {
+    if (open && modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [open, poem]);
+
   if (!poem) return null;
 
   return (
     <div className={`modal-backdrop ${open ? "is-open" : ""}`} onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+      <div className="modal" ref={modalRef} onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose} aria-label="Close">
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6">
             <line x1="2" y1="2" x2="10" y2="10" />
