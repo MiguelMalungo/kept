@@ -14,11 +14,14 @@ function PrintModal({ poem, open, onClose }) {
   useEffect(() => {
     if (!open || !modalRef.current) return;
     const el = modalRef.current;
-    el.scrollTop = 0;
-    // Reset again after paint in case image load causes reflow
-    const raf = requestAnimationFrame(() => { el.scrollTop = 0; });
-    // And once more after a short delay for slow-loading assets
-    const timer = setTimeout(() => { el.scrollTop = 0; }, 100);
+    const resetAll = () => {
+      el.scrollTop = 0;
+      // Also reset nested scroll containers (e.g. .modal-poem overlay)
+      el.querySelectorAll(".modal-poem, .modal-media").forEach((n) => { n.scrollTop = 0; });
+    };
+    resetAll();
+    const raf = requestAnimationFrame(resetAll);
+    const timer = setTimeout(resetAll, 100);
     return () => { cancelAnimationFrame(raf); clearTimeout(timer); };
   }, [open, poem]);
 
