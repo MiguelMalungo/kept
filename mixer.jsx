@@ -39,6 +39,9 @@ function Deck({ label, audioRef, track, setTrack, playing, setPlaying }) {
     if (playing) {
       a.pause();
     } else {
+      // Resume any suspended AudioContext on this user gesture before play.
+      const ctx = window.__mixerAudioCtx;
+      if (ctx && ctx.state === "suspended") ctx.resume().catch(() => {});
       a.play().catch(() => {});
     }
     setPlaying(!playing);
@@ -132,58 +135,66 @@ function Mixer() {
   const audioCtxRef = React.useRef(null);
   const gainARef = React.useRef(null);
   const gainBRef = React.useRef(null);
-
-  // Detect once whether HTMLAudioElement.volume is honored. iOS Safari (and
-  // every iOS-based browser, since they all use WebKit) keeps it pinned to 1.0.
-  // On every other platform — desktop Safari, mobile + desktop Chrome,
-  // Firefox, Android — volume works directly, so we don't need Web Audio.
-  const needsWebAudioRef = React.useRef(null);
-  if (needsWebAudioRef.current === null) {
-    try {
-      const test = document.createElement("audio");
-      test.volume = 0.5;
-      needsWebAudioRef.current = test.volume !== 0.5;
-    } catch (e) {
-      needsWebAudioRef.current = true;
-    }
-  }
+  const graphBuiltRef = React.useRef(false);
 
   // Linear crossfade gains
   const gainA = crossfade <= 0 ? 1 : 1 - crossfade;
   const gainB = crossfade >= 0 ? 1 : 1 + crossfade;
 
-  // Build Web Audio graph (iOS only — see needsWebAudioRef above). On Chrome,
-  // Firefox, and desktop browsers we never call this, so the audio element
-  // keeps direct control and audio.volume changes work as normal.
+  // Build Web Audio graph on ALL platforms. HTMLAudioElement.volume is
+  // ignored on iOS Safari, so going through GainNodes is the only way to get
+  // reliable crossfade control everywhere. On other browsers it works just
+  // as well — we route every audio element through a gain node so behavior
+  // is identical across desktop Chrome/Safari/Firefox and mobile iOS/Android.
   const ensureAudioGraph = React.useCallback(() => {
-    if (!needsWebAudioRef.current) return;
-    if (audioCtxRef.current) return;
-    const Ctx = window.AudioContext || window.webkitAudioContext;
-    if (!Ctx) return;
     const a = audioARef.current;
     const b = audioBRef.current;
     if (!a || !b) return;
-    let ctx;
-    try {
-      ctx = new Ctx();
-      const srcA = ctx.createMediaElementSource(a);
-      const srcB = ctx.createMediaElementSource(b);
-      const gA = ctx.createGain();
-      const gB = ctx.createGain();
-      gA.gain.value = gainA;
-      gB.gain.value = gainB;
-      srcA.connect(gA).connect(ctx.destination);
-      srcB.connect(gB).connect(ctx.destination);
-      audioCtxRef.current = ctx;
-      gainARef.current = gA;
-      gainBRef.current = gB;
-      if (ctx.state === "suspended") ctx.resume().catch(() => {});
-    } catch (e) {
-      // Source already connected or context creation failed — bail out
-      audioCtxRef.current = null;
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+
+    // Create AudioContext lazily — once. Suspended state on iOS until a
+    // user gesture resumes it; we call resume() on every interaction below.
+    if (!audioCtxRef.current) {
+      try {
+        audioCtxRef.current = new Ctx();
+        // Expose so Deck togglePlay can resume after iOS suspends it.
+        window.__mixerAudioCtx = audioCtxRef.current;
+      } catch (e) {
+        return;
+      }
     }
+    const ctx = audioCtxRef.current;
+
+    // Wire each <audio> into the graph exactly once. createMediaElementSource
+    // can only be called once per element — guard with a ref so React
+    // re-renders never re-wire and throw InvalidStateError.
+    if (!graphBuiltRef.current) {
+      try {
+        const srcA = ctx.createMediaElementSource(a);
+        const srcB = ctx.createMediaElementSource(b);
+        const gA = ctx.createGain();
+        const gB = ctx.createGain();
+        gA.gain.value = gainA;
+        gB.gain.value = gainB;
+        srcA.connect(gA).connect(ctx.destination);
+        srcB.connect(gB).connect(ctx.destination);
+        gainARef.current = gA;
+        gainBRef.current = gB;
+        graphBuiltRef.current = true;
+      } catch (e) {
+        // Already wired in this session — leave existing graph alone.
+      }
+    }
+
+    // Resume on every call. iOS suspends on backgrounding / lock screen and
+    // any browser may suspend after long inactivity; resuming is cheap.
+    if (ctx.state === "suspended") ctx.resume().catch(() => {});
   }, []);
 
+  // Push gain changes through the GainNodes once they exist. Before the
+  // first user gesture (pre-graph) we fall back to the audio element's
+  // .volume — harmless on iOS (ignored) and works on everything else.
   React.useEffect(() => {
     if (gainARef.current) gainARef.current.gain.value = gainA;
     else if (audioARef.current) audioARef.current.volume = gainA;
@@ -194,22 +205,34 @@ function Mixer() {
     else if (audioBRef.current) audioBRef.current.volume = gainB;
   }, [gainB]);
 
-  // Auto-play Blop on deck A. Browsers allow this after any user gesture.
+  // Bootstrap the audio graph on the first user gesture *anywhere*. iOS will
+  // not let us create / resume an AudioContext outside a gesture, so we listen
+  // capture-phase across the whole document and tear down once it's set up.
   React.useEffect(() => {
-    const tryPlay = () => {
-      const a = audioARef.current;
-      if (!a) return;
-      a.currentTime = 0;
-      a.play().then(() => setPlayingA(true)).catch(() => {});
+    const onGesture = () => {
+      ensureAudioGraph();
+      // Don't auto-play deck A here — iOS treats audio.play() outside the
+      // exact gesture call stack as a new attempt that may be blocked. We
+      // let the user tap Play to start audio. The graph being ready means
+      // the very first play call already routes through the gain node.
     };
-    tryPlay();
-    const onFirstGesture = () => { tryPlay(); };
-    window.addEventListener("pointerdown", onFirstGesture, { once: true });
-    window.addEventListener("touchstart", onFirstGesture, { once: true });
+    document.addEventListener("pointerdown", onGesture, { capture: true });
+    document.addEventListener("touchstart", onGesture, { capture: true, passive: true });
+    document.addEventListener("click", onGesture, { capture: true });
     return () => {
-      window.removeEventListener("pointerdown", onFirstGesture);
-      window.removeEventListener("touchstart", onFirstGesture);
+      document.removeEventListener("pointerdown", onGesture, { capture: true });
+      document.removeEventListener("touchstart", onGesture, { capture: true });
+      document.removeEventListener("click", onGesture, { capture: true });
     };
+  }, [ensureAudioGraph]);
+
+  // Try to autoplay Deck A on mount. Most desktop browsers and Android Chrome
+  // allow muted-or-not autoplay for a first audio element on page load; iOS
+  // and Safari will silently reject and the user taps Play instead.
+  React.useEffect(() => {
+    const a = audioARef.current;
+    if (!a) return;
+    a.play().then(() => setPlayingA(true)).catch(() => {});
   }, []);
 
   return (
