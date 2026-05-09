@@ -969,7 +969,7 @@ a { color: inherit; text-decoration: none; }
   .poem-print-btn { padding: 2px 0; }
   .btn-label-desktop { display: none; }
   .btn-label-mobile { display: inline; }
-  .modal { grid-template-columns: 1fr; max-height: 92vh; overflow-y: auto; }
+  .modal { grid-template-columns: 1fr; max-height: 92vh; overflow-y: auto; overflow-anchor: none; }
   .modal-media { max-height: none; }
   .modal-print { padding: 32px 24px 0; }
   .modal-print-info { padding-bottom: 32px; }

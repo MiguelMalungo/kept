@@ -12,9 +12,14 @@ function PrintModal({ poem, open, onClose }) {
   }, [open, onClose]);
 
   useEffect(() => {
-    if (open && modalRef.current) {
-      modalRef.current.scrollTop = 0;
-    }
+    if (!open || !modalRef.current) return;
+    const el = modalRef.current;
+    el.scrollTop = 0;
+    // Reset again after paint in case image load causes reflow
+    const raf = requestAnimationFrame(() => { el.scrollTop = 0; });
+    // And once more after a short delay for slow-loading assets
+    const timer = setTimeout(() => { el.scrollTop = 0; }, 100);
+    return () => { cancelAnimationFrame(raf); clearTimeout(timer); };
   }, [open, poem]);
 
   if (!poem) return null;
