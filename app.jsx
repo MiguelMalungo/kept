@@ -104,7 +104,7 @@ function App() {
         <footer className="footer">
           <div>
             <div className="footer-mark">Blend</div>
-            <div style={{ marginTop: 8, fontSize: 10 }}>An interactive book of poems</div>
+            <div style={{ marginTop: 8, fontSize: 10 }}>A digital garden, always growing</div>
           </div>
           <div style={{ display: "flex", gap: 32 }}>
             <span>© MMXXVI</span>
