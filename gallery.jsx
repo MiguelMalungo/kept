@@ -110,7 +110,7 @@ function Gallery({ onOpen }) {
       <section className="intro" id="gallery">
         <div>
           <div className="intro-label">The garden</div>
-          <h2>Poems blooming,<br/><em>films unfolding,</em><br/>prints taking root.</h2>
+          <h2>Words blooming,<br/><em>images unfolding,</em><br/>prints taking root.</h2>
         </div>
         <p>
           Open a poem to read it whole,
