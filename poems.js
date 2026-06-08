@@ -1,4 +1,4 @@
-// 16 poems by Kaleidokonscious. Array order = grid order.
+// 17 poems by Kaleidokonscious. Array order = grid order.
 // Position N → roman numeral Roman(N) → image N.png → video poem-{Roman(N)}.mp4
 window.POEMS = [
   { num: "I",    title: "Shaken",        hue: 28,  tone: 0.08, theme: "dawn",    video: "assets/web/poem-I.mp4",    image: "assets/1.png",  body: `No you weren't broken, you were shaken
@@ -85,4 +85,13 @@ To me is more silly than bold
 Recognize it manifests
 Staying on it and its tests
 The best experiences unfold` },
+  { num: "XVII", title: "Love Like the Sun", hue: 42, tone: 0.13, theme: "solar", video: "assets/web/poem-XVII.mp4", image: "assets/17.png", body: `Love is like sunlight, invaluable
+Humble of source, inexhaustible
+A gift which transcends intention
+Feeling love is your own love giving
+Not sucking someone's attention
+Anger, revenge dims your light
+You'll be the one burned and done
+So wherever you come to be
+You shine and love like the Sun` },
 ];
