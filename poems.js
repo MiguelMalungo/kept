@@ -94,7 +94,7 @@ Anger, revenge dims your light
 You'll be the one burned and done
 So wherever you come to be
 You shine and love like the Sun` },
-  { num: "XVIII", title: "Butterfly", hue: 30, tone: 0.10, theme: "monarch", video: "assets/web/poem-XVIII.mp4", image: "assets/18.png", body: `Don't you dare help out the larvae
+  { num: "XVIII", title: "Metamorph", hue: 30, tone: 0.10, theme: "monarch", video: "assets/web/poem-XVIII.mp4", image: "assets/18.png", body: `Don't you dare help out the larvae
 While in the chrysalis state
 Ugly, mushy, like dissolving
 That's nature's work on its fate
