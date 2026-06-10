@@ -85,7 +85,7 @@ To me is more silly than bold
 Recognize it manifests
 Staying on it and its tests
 The best experiences unfold` },
-  { num: "XVII", title: "Love Like the Sun", hue: 42, tone: 0.13, theme: "solar", video: "assets/web/poem-XVII.mp4", image: "assets/17.png", body: `Love is like sunlight, invaluable
+  { num: "XVII", title: "Sun", hue: 42, tone: 0.13, theme: "solar", video: "assets/web/poem-XVII.mp4", image: "assets/17.png", body: `Love is like sunlight, invaluable
 Humble of source, inexhaustible
 A gift which transcends intention
 Feeling love is your own love giving
