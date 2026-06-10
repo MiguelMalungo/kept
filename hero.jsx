@@ -138,7 +138,6 @@ function Hero() {
         </div>
         <div className="hero-meta">
           <span>Poems &nbsp;·&nbsp; Films &nbsp;·&nbsp; Prints &nbsp;·&nbsp; Music</span>
-          <b>A digital garden — always growing</b>
           <span>Words by Kaleidokonscious</span>
           <span>Images & Videos generated w/ Midjourney</span>
           <span>Songs generated w/ Suno</span>
