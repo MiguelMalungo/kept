@@ -1,4 +1,4 @@
-// 17 poems by Kaleidokonscious. Array order = grid order.
+// 18 poems by Kaleidokonscious. Array order = grid order.
 // Position N → roman numeral Roman(N) → image N.png → video poem-{Roman(N)}.mp4
 window.POEMS = [
   { num: "I",    title: "Shaken",        hue: 28,  tone: 0.08, theme: "dawn",    video: "assets/web/poem-I.mp4",    image: "assets/1.png",  body: `No you weren't broken, you were shaken
@@ -94,4 +94,12 @@ Anger, revenge dims your light
 You'll be the one burned and done
 So wherever you come to be
 You shine and love like the Sun` },
+  { num: "XVIII", title: "Butterfly", hue: 30, tone: 0.10, theme: "monarch", video: "assets/web/poem-XVIII.mp4", image: "assets/18.png", body: `Don't you dare help out the larvae
+While in the chrysalis state
+Ugly, mushy, like dissolving
+That's nature's work on its fate
+Let that old structure break down
+Metamorph to its last cry
+And you will get in return
+A splendid free butterfly` },
 ];
