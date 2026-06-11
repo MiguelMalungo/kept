@@ -102,4 +102,16 @@ Let that old structure break down
 Metamorph to its last cry
 And you will get in return
 A splendid free butterfly` },
+  { num: "XIX", title: "Heartbreak", hue: 215, tone: 0.06, theme: "tide", video: "assets/web/poem-XIX.mp4", image: "assets/19.png", body: `The time mechanics of heartbreak
+Takes place in one's self alone
+The hope of a desired future
+That we then drag like a stone
+A illusory feeling of loosing
+A painful Internal moan
+For something that we never had
+A dreams death that feels our own
+Yes, some yesterdays felt so great
+But if somehow they don't last
+Keep that present in your heart
+And be grateful for that past` },
 ];
