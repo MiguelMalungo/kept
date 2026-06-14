@@ -427,8 +427,8 @@ a { color: inherit; text-decoration: none; }
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: 1fr;
+  gap: 40px;
   align-items: end;
 }
 .intro-label {
