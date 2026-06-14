@@ -103,7 +103,7 @@ function App() {
 
         <footer className="footer">
           <div>
-            <div className="footer-mark">Blend</div>
+            <div className="footer-mark">Serenity</div>
             <div style={{ marginTop: 8, fontSize: 10 }}>A digital garden, always growing</div>
           </div>
           <div style={{ display: "flex", gap: 32 }}>

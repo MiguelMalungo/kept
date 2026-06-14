@@ -105,7 +105,7 @@ function Hero() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const title = "Blend";
+  const title = "Serenity";
 
   const renderChars = (text) =>
     text.split("").map((c, i) => {
