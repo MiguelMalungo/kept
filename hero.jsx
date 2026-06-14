@@ -132,7 +132,7 @@ function Hero() {
       <div className="hero-content">
         <div>
           <h1 className="hero-title" ref={titleRef}>
-            <span style={{ display: "inline-block", color: "var(--accent)" }}>{renderChars(title)}</span>
+            <span style={{ display: "inline-block" }}>{renderChars(title)}</span>
             <em>by Kaleidokonscious</em>
           </h1>
         </div>

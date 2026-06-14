@@ -110,7 +110,7 @@ function Gallery({ onOpen }) {
       <section className="intro" id="gallery">
         <div>
           <div className="intro-label">The prayer</div>
-          <h2>God, grant me the serenity to accept the things I cannot change,<br/>Courage to change the things I can,<br/><em>And wisdom to know the difference.</em></h2>
+          <h2>God, grant me the <span style={{ color: "var(--accent)" }}>serenity</span> to accept the things I cannot change,<br/>Courage to change the things I can,<br/><em>And wisdom to know the difference.</em></h2>
         </div>
         <p>
           Open a poem to read it whole,
