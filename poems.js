@@ -114,4 +114,13 @@ Yes, some yesterdays felt so great
 But if somehow they don't last
 Keep that present in your heart
 And be grateful for that past` },
+  { num: "XX", title: "Choose", hue: 210, tone: 0.05, theme: "storm", video: "assets/web/poem-XX.mp4", image: "assets/20.png", body: `When the bison faces a storm
+He knows he can't change the weather
+And escaping won't make him warm
+So goes throw it, shortens the matter
+We can stop shaking when it's cold
+Breath in and accept what is
+Choose our attitude to the moment
+And stop shivering our knees
+Also works to not get old` },
 ];
