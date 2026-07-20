@@ -123,4 +123,13 @@ Breath in and accept what is
 Choose our attitude to the moment
 And stop shivering our knees
 Also works to not get old` },
+  { num: "XXI", title: "Thoughts!?", hue: 110, tone: 0.05, theme: "ghost", video: "assets/web/poem-XXI.mp4", image: "assets/21.png", body: `If they thought that it was true
+Then u know they haven't lied
+All peoples feelings are valid
+Some just aren't justified
+
+Thoughts and feelings can't be trusted
+With depressions living ghost
+Which needs feeding, wants to grow
+Even if that kills the host` },
 ];
