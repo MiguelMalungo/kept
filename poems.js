@@ -132,7 +132,7 @@ Thoughts and feelings can't be trusted
 With depressions living ghost
 Which needs feeding, wants to grow
 Even if that kills the host` },
-  { num: "XXII", title: "Labels", hue: 45, tone: 0.09, theme: "brass", video: "assets/web/poem-XXII.mp4", image: "assets/22.png", body: `The system is not your friend
+  { num: "XXII", title: "Labels", hue: 45, tone: 0.09, theme: "brass", video: "assets/web/poem-XXII.mp4", image: "assets/22.png", body: `The system was never your friend
 Those labels it makes you wear
 While selling you "just be yourself"
 You hang and it consumes your flare
@@ -140,7 +140,7 @@ Be diverse yet indefinable
 Owning everything you do
 God didn't make you random
 It knows what it wants from you` },
-  { num: "XXIII", title: "Innerbloom", hue: 18, tone: 0.08, theme: "bloom", video: "assets/web/poem-XXIII.mp4", image: "assets/23.png", body: `Dancing with the u predictable
+  { num: "XXIII", title: "Innerbloom", hue: 18, tone: 0.08, theme: "bloom", video: "assets/web/poem-XXIII.mp4", image: "assets/23.png", body: `Dancing with the unpredictable
 That lightness of full alignment
 You can't really call it luck
 It's the soul in its refinement
