@@ -132,4 +132,45 @@ Thoughts and feelings can't be trusted
 With depressions living ghost
 Which needs feeding, wants to grow
 Even if that kills the host` },
+  { num: "XXII", title: "Labels", hue: 45, tone: 0.09, theme: "brass", video: "assets/web/poem-XXII.mp4", image: "assets/22.png", body: `The system is not your friend
+Those labels it makes you wear
+While selling you "just be yourself"
+You hang and it consumes your flare
+Be diverse yet indefinable
+Owning everything you do
+God didn't make you random
+It knows what it wants from you` },
+  { num: "XXIII", title: "Innerbloom", hue: 18, tone: 0.08, theme: "bloom", video: "assets/web/poem-XXIII.mp4", image: "assets/23.png", body: `Dancing with the u predictable
+That lightness of full alignment
+You can't really call it luck
+It's the soul in its refinement
+When you stop forcing and conquering
+And the universe still with indifference
+Answers that let go with harmony
+Just to your natural presence
+That creative empty void
+A too personal innerbloom
+I can only find parallel
+To each mothers unique womb` },
+  { num: "XXIV", title: "Task", hue: 280, tone: 0.06, theme: "rain", video: "assets/web/poem-XXIV.mp4", image: "assets/24.png", body: `God don't meddle, talk and such
+Otherwise I'd like to ask
+Why do we suffer so much
+Why so many needless fears
+Is it to temper our life task
+With the saltiness of our tears?` },
+  { num: "XXV", title: "Keep", hue: 35, tone: 0.04, theme: "ash", video: "assets/web/poem-XXV.mp4", image: "assets/25.png", body: `Government, school, family, friends
+They'll all may lie and deceive
+But the only lies that hurt
+Are those you want to believe
+Accept your vulnerabilities
+Adapt, keep going, maintain
+Prophet said everyone will hurt u
+Keep those who are worth the pain` },
+  { num: "XXVI", title: "Now", hue: 25, tone: 0.06, theme: "cosmos", video: "assets/web/poem-XXVI.mp4", image: "assets/26.png", body: `We who turns, from born to death
+Our vibrating bubble of now
+Expands with the holy breath
+When you're not immersed in the moment
+That's the only time you loose
+Your body, mind.. nothings real
+Nor the narratives you choose` },
 ];
