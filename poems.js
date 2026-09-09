@@ -173,4 +173,52 @@ When you're not immersed in the moment
 That's the only time you loose
 Your body, mind.. nothings real
 Nor the narratives you choose` },
+  { num: "XXVII", title: "Poem", hue: 30, tone: 0.07, theme: "hearth", video: "assets/web/poem-XXVII.mp4", image: "assets/27.png", body: `So long you just followed paths
+Cause you were expected in places
+Now you don’t know how you got here
+And can’t even find the traces
+To that point where you got lost
+Suddenly it all crumbles around
+You can see behind those walls
+That’s when you are finally found
+As the denying fear dust passes
+With your heart finally home
+You inhabit your own life
+Not as writer but as poem` },
+  { num: "XXVIII", title: "Miracles", hue: 205, tone: 0.07, theme: "voyage", video: "assets/web/poem-XXVIII.mp4", image: "assets/28.png", body: `Through life’s ocean my boat’s going
+Each trial as a fading trail
+Arms and mind still strong and rowing
+Heart always held high as sail
+Some pray to not pass as failure
+To be honest I don’t care
+Others say miracles happen
+Well I see them everywhere` },
+  { num: "XXIX", title: "Happens", hue: 275, tone: 0.06, theme: "flux", video: "assets/web/poem-XXIX.mp4", image: "assets/29.png", body: `You God damn right people change
+Happens all the time in fact
+From need, deep insight or hurt
+They just can’t be told to do that
+Just beware of the dragging judges
+That tell you, people cannot
+In their lack of self faith confession
+Don’t drink from their poisoned pot
+Or those that claim they’re enlightened
+A groups of gods chosen souls
+Like God is their sugar daddy
+They’re lost in their sponged mind holes` },
+  { num: "XXX", title: "Future", hue: 190, tone: 0.05, theme: "horizon", video: "assets/web/poem-XXX.mp4", image: "assets/30.png", body: `Though my life´s goal is to want nothing
+I can´t escape this fatality
+Of dreaming strong ...and the future
+transcends this present reality` },
+  { num: "XXXI", title: "Mask", hue: 320, tone: 0.08, theme: "veil", video: "assets/web/poem-XXXI.mp4", image: "assets/31.png", body: `Cause every one wears a mask
+And the shame they’re trying to hide
+Is on what the thickness depends
+And how opposed their inside` },
+  { num: "XXXII", title: "Math", hue: 285, tone: 0.07, theme: "quantum", video: "assets/web/poem-XXXII.mp4", image: "assets/32.png", body: `The West aims to be 1, YES, all
+The East, to be NOT, nothing, 0
+Why not be both simultaneously
+A quantic magician hero
+For each -A event
+Negative of gloomier trouble
+Find another, multiply them
+You’ll get its positive in double` },
 ];

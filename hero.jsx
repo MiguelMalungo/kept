@@ -86,6 +86,7 @@ function HeroVideos() {
           }}
         />
       ))}
+      <window.HeroParticles />
     </div>
   );
 }

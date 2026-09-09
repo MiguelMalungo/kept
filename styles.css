@@ -116,6 +116,18 @@ a { color: inherit; text-decoration: none; }
     linear-gradient(180deg, oklch(0.10 0.02 50 / 0.69) 0%, oklch(0.10 0.02 50 / 0.24) 35%, oklch(0.10 0.02 50 / 0.99) 100%);
   z-index: 2;
 }
+/* Above .hero-video::after, not below it. That gradient reaches 99% opacity at
+   the bottom of the hero, so anything underneath it is painted out — which is
+   what buried the particles when this sat at z-index 1. Still inside
+   .hero-video (z-index 0), so it stays behind .hero-content and never covers
+   the mixer. pointer-events stays none; the sprout listener is on .hero. */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
 .hero-video-canvas {
   position: absolute;
   inset: 0;
